@@ -1,0 +1,15 @@
+mol = ase.io.read(strfile)
+if use_radii:
+    view.remove_ball_and_stick()
+    view.add_licorice(radius=0.1)
+    unique_atnums = list(set(mol.numbers))
+#    for i,Z in enumerate(mol.numbers): # iterations over each atom
+#        sel='@{}'.format(i)
+    for Z in unique_atnums: # iterations over each element
+        element = qcel.periodictable.to_E(Z)
+        sel='_{}'.format(element)
+        #r=qcel.covalentradii.get(Z)*scale_factor #with scale_factor=3.0 
+        #view.add_ball_and_stick(sel,aspectRatio=r)
+        r=qcel.covalentradii.get(Z)*scale_factor
+        view.add_ball_and_stick(sel,radius=r)
+
